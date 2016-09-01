@@ -1,17 +1,19 @@
 #include <stdio.h>
 #include "C.h"
 
+//Gets the real component of the complex Number
 template <class T>
 T C<T>::getReal() {
 	return real;
 }
 
-
+//Gets the imaginary component of the complex Number
 template <class T>
 T C<T>::getComplex() {
 	return complex;
 }
 
+//Implements addition for this class
 template <class T>
 C<T> C<T>::operator+ (const C<T> param) {
 	C<T> temp;
@@ -20,6 +22,7 @@ C<T> C<T>::operator+ (const C<T> param) {
 	return temp;
 }
 
+//Implements multiplication for this class
 template <class T>
 C<T> C<T>::operator* (const C<T> param) {
 	C<T> temp;
@@ -28,6 +31,7 @@ C<T> C<T>::operator* (const C<T> param) {
 	return temp;
 }
 
+//Test if the functions work
 int main() {
 
 	C<int> s (3,5);
