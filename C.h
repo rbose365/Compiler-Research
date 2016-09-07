@@ -10,7 +10,7 @@ public:
 	//Constructors
 	C<T> () {};
 	C<T> (T a, T b) : real(a), complex(b){};
-	C<T> (T a) : real(a){};
+	C<T> (T a) : real(a), complex (0){};
 
 	//Getters
 	T getReal();

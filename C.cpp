@@ -31,8 +31,26 @@ C<T> C<T>::operator* (const C<T> param) {
 	return temp;
 }
 
+//Implements scalar multiplication
+template <class T>
+C<T> operator* (C<T> cc, T const& scalar) {
+	C<T> temp;
+	temp.real = cc.real * scalar;
+	temp.complex = cc.complex * scalar;
+	return temp;
+}
+
+//Implements scalar addition
+template <class T>
+C<T> operator+ (C<T> cc, T const& scalar) {
+	C<T> temp;
+	temp.real = cc.real + scalar;
+	temp.complex = cc.complex;
+	return temp;
+}
+
 //Test if the functions work
-int main() {
+int test() {
 	//Test Getters
 	printf("Test Getters on ints:\n");
 
@@ -74,6 +92,18 @@ int main() {
 	printf("(%f + %f i) * (%f + %f i) = (%f + %f i)\n",
 		a.real, a.complex, b.real, b.complex, product.real, product.complex);
 
+	C<double> x(0, 1.0);
+	C<double> mult;
+	mult = x * 13.0;
+
+	printf("13 * sqrt(-1) = %f + %f i\n", mult.getReal(), mult.getComplex());
+
+	C<double> add;
+	add = x + 13;
+	printf("13 + sqrt(-1) = %f + %f i\n", add.getReal(), add.getComplex());
+
+	C<int> real = 1;
+	printf("does 1 = %i\n", real.getReal());
 
 	return 1;
 }
