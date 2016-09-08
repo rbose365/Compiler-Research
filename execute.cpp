@@ -86,8 +86,11 @@ int main() {
 	// x[1] = new C<double>(-1,0);
 
 	C<double>* y = (C<double>*) malloc(sizeof(C<double>) * 3);
-	evaluate(x, y);
-	printf("G18: %f + %f i\n G29: %f + %f i\n G40: %f + %f i\n",
-		y[0].getReal(), y[0].getComplex(), y[1].getReal(),
-		y[1].getComplex(), y[2].getReal(), y[2].getComplex());
+	for (int i = 0; i < 1000000; ++i)
+	{
+		evaluate(x, y);
+		// printf("G18: %f + %f i\n G29: %f + %f i\n G40: %f + %f i\n",
+		// 	y[0].getReal(), y[0].getComplex(), y[1].getReal(),
+		// 	y[1].getComplex(), y[2].getReal(), y[2].getComplex());
+	}
 }
