@@ -1,53 +1,6 @@
 #include <stdio.h>
 #include "C.h"
 
-//Gets the real component of the complex Number
-template <class T>
-T C<T>::getReal() {
-	return real;
-}
-
-//Gets the imaginary component of the complex Number
-template <class T>
-T C<T>::getComplex() {
-	return complex;
-}
-
-//Implements addition for this class
-template <class T>
-C<T> C<T>::operator+ (const C<T> param) {
-	C<T> temp;
-	temp.real = real + param.real;
-	temp.complex = complex + param.complex;
-	return temp;
-}
-
-//Implements multiplication for this class
-template <class T>
-C<T> C<T>::operator* (const C<T> param) {
-	C<T> temp;
-	temp.real = (real * param.real) - (complex * param.complex);
-	temp.complex = (real*param.complex) + (complex * param.real);
-	return temp;
-}
-
-//Implements scalar multiplication
-template <class T>
-C<T> operator* (C<T> cc, T const& scalar) {
-	C<T> temp;
-	temp.real = cc.real * scalar;
-	temp.complex = cc.complex * scalar;
-	return temp;
-}
-
-//Implements scalar addition
-template <class T>
-C<T> operator+ (C<T> cc, T const& scalar) {
-	C<T> temp;
-	temp.real = cc.real + scalar;
-	temp.complex = cc.complex;
-	return temp;
-}
 
 //Test if the functions work
 int test() {
@@ -101,9 +54,8 @@ int test() {
 	C<double> add;
 	add = x + 13;
 	printf("13 + sqrt(-1) = %f + %f i\n", add.getReal(), add.getComplex());
-
+	
 	C<int> real = 1;
 	printf("does 1 = %i\n", real.getReal());
-
 	return 1;
 }
