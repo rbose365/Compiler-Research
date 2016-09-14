@@ -1,6 +1,7 @@
 #include "C.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 void evaluate(const C<double>* x, C<double>*y) {
 
@@ -80,17 +81,30 @@ void evaluate(const C<double>* x, C<double>*y) {
 
 
 int main() {
-	C<double> x[2] = {C<double>(1.0,0), C<double>(1.0,0)};
-
-	// x[0] = new C<double>(1,0);
-	// x[1] = new C<double>(-1,0);
-
+	int numRuns = 10;
+	C<double> x[2] = {C<double>(rand(), rand()), C<double>(rand(), rand())};
 	C<double>* y = (C<double>*) malloc(sizeof(C<double>) * 3);
-	for (int i = 0; i < 1000000; ++i)
-	{
+
+	FILE * timeFile;
+	timeFile = fopen("timeFile.txt", "w");
+
+	for (int i = 0; i < numRuns; ++i) {
+		fprintf(timeFile, "Run:%i\n", i);
+		clock_t startTime = clock();
+
 		evaluate(x, y);
+
+		clock_t endTime = clock();
+		clock_t clockTicksTaken = endTime - startTime;
+		double timeInSeconds = clockTicksTaken / (double) CLOCKS_PER_SEC;
+		fprintf(timeFile, "Time: %f\n", timeInSeconds);
+
 		// printf("G18: %f + %f i\n G29: %f + %f i\n G40: %f + %f i\n",
 		// 	y[0].getReal(), y[0].getComplex(), y[1].getReal(),
 		// 	y[1].getComplex(), y[2].getReal(), y[2].getComplex());
+
+		fprintf(timeFile, "\n");
 	}
+
+	fclose(timeFile);
 }
