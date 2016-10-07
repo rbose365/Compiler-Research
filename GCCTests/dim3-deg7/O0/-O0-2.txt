@@ -1,0 +1,8 @@
+Total run time = 21.898393s
+Number of Runs = 1000000
+Average run time = 0.000022s
+
+Compilation Time:
+real	0m0.527s
+user	0m0.460s
+sys		0m0.044s
