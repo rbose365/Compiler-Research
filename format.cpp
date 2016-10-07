@@ -22,7 +22,7 @@ int main() {
 
 	while (file) {
 		string news;
-		file.getline(str, 255);
+		file.getline(str, 511);
 		if (file && i == 3) {
 			fprintf(newFile, "%s\n", str);
 		} else if (file && i > 3) {
@@ -35,6 +35,7 @@ int main() {
 	    		news.append(s.substr(k, s.length() - k - 4));
 	    		news.append(" + ");
 	    		news.append(s.substr(j,k - j - 1));
+	    		news.append(";");
 	    	} else {
 	    		news.append(s);
 	    	}
@@ -50,7 +51,7 @@ int main() {
 	    }
 	    i++;
 	}
-
+	printf("%s %i\n", "Done", i);
 	file.close();
 
 	return 1;
