@@ -3,7 +3,7 @@
  
 template <class T> class C {
 public:
-	//Fields - can change to public if we want to hide
+	//Fields - can change public if we want to hide
 	T real;
 	T complex;
 

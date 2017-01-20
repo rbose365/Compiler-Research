@@ -3,7 +3,7 @@
 
 
 //Test if the functions work
-int test() {
+int main() {
 	//Test Getters
 	printf("Test Getters on ints:\n");
 

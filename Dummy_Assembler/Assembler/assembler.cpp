@@ -61,24 +61,50 @@ int emit(statement *curr) {
 	switch(curr->src1_type) {
 		case INT:
 			op1 = curr->src1_string;
+			break;
 		case input_variable:
-			op1 = vals[curr->src1_val]
+			op1 = vals[curr->src1_val];
+			break;
+	}
 
 	switch(curr->src2_type) {
 		case INT:
 			op2 = curr->src2_string;
+			break;
 		case input_variable:
-			op2 = vals[curr->src2_val]
-
-	
-
+			op2 = vals[curr->src2_val];
+			break;
 	}
 
-	// __asm__ ( "movl $10, %eax;"
- //                "movl $20, %ebx;"
- //                "addl %ebx, %eax;"
- //    );
+	if (curr->operator_type == ADD) {
+		printf("%i + %i = ", op1, op2);
+		// asm ( "movl %2, %%eax;"
+	 //              "movl %1, %%ebx;"
+	 //              "addl %%ebx, %%eax;"
+	 //              "movl %%eax, %0 ;"
+	 //              : "=r" (vals[curr->dst])
+	 //              : "r"  (op1), "r"(op2)
+	 //    );
 
+		__asm__ ( "addl %%ebx, %%eax;"
+			        : "=a" (vals[curr->dst])
+			        : "a" (op1), "b" (op2) );
+		printf("%i\n", vals[curr->dst]);
+	} else if (curr->operator_type == MULT) {
+		printf("%i * %i = ", op1, op2);
+		// asm ( "movl %2, %%eax;"
+	 //              "movl %1, %%ebx;"
+	 //              "imull %%ebx, %%eax;"
+	 //              "movl %%eax, %0 ;"
+	 //              : "=r" (vals[curr->dst])
+	 //              : "r"  (op1), "r"(op2)
+	 //              : "%eax", "%ebx"
+	 //    );
+		__asm__ ( "imull %%ebx, %%eax;"
+			        : "=a" (vals[curr->dst])
+			        : "a" (op1), "b" (op2) );
+	    printf("%i\n", vals[curr->dst]);
+	}
 
 	return 0;
 }
@@ -86,22 +112,22 @@ int emit(statement *curr) {
 struct statement statements[100];
 
 int main() {
-	int NUM_STATEMENTS = 3;
+	int NUM_STATEMENTS = 2;
 	int out = 0;
 	int out1 = 0;
 
 	vals[C1] = 1;
 
-    asm( "movl $2, %0;"
-    	 : "=r" ( vals[0] )
-    	);
-    printf("OUT: %i\n", vals[0]);
+    // asm( "movl $2, %0;"
+    // 	 : "=r" ( vals[0] )
+    // 	);
+    // printf("OUT: %i\n", vals[0]);
 
-    //G1 = C1 * .1125
+    //G1 = C1 * 2
 	statements[0].dst = G1;
 	statements[0].src1_val = C1;
 	statements[0].src1_type = input_variable;
-	statements[0].src2_string  = 1;
+	statements[0].src2_string  = 2;
 	statements[0].src2_val = integer; 
 	statements[0].src2_type = INT;
 	statements[0].operator_type = MULT;
@@ -109,9 +135,9 @@ int main() {
 
 	statements[1].dst = G2;
 	statements[1].src1_val = G1;
-	statements[1].src1_type = output_variable;
+	statements[1].src1_type = input_variable;
 	statements[1].src2_val = G1;
-	statements[1].src1_type = output_variable;   
+	statements[1].src2_type = input_variable;   
 	statements[1].operator_type = MULT; 
 	statements[1].operand_types = ALL_OUTPUT_VARIABLES;
 
@@ -123,5 +149,9 @@ int main() {
 			return 1;
 		}
 	}
+
+	printf("G1: %i\n", vals[G1]);
+	printf("G2: %i\n", vals[G2]);
+
 	return 0;
 }
